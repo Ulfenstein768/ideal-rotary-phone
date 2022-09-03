@@ -25,13 +25,11 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(
-    "http://javascriptreact-react-frameworks.local/graphql",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
+  const res = await fetch("http://reactframeworks/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
           query HomePageQuery {
             posts {
               nodes {
@@ -41,9 +39,8 @@ export async function getStaticProps() {
             }
           }
           `,
-      }),
-    }
-  );
+    }),
+  });
 
   const json = await res.json();
 

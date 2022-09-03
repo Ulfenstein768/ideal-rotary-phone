@@ -16,13 +16,11 @@ export default function Post(data) {
 }
 
 export async function getStaticProps(context) {
-  const res = await fetch(
-    "http://javascriptreact-react-frameworks.local/graphql",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
+  const res = await fetch("http://reactframeworks/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
                 query SinglePost($id: ID!, $idType: PostIdType!) {
                     post(id: $id, idType: $idType) {
                         title
@@ -36,13 +34,12 @@ export async function getStaticProps(context) {
                     }
                 }
             `,
-        variables: {
-          id: context.params.slug,
-          idType: "SLUG",
-        },
-      }),
-    }
-  );
+      variables: {
+        id: context.params.slug,
+        idType: "SLUG",
+      },
+    }),
+  });
 
   const json = await res.json();
 
@@ -54,13 +51,11 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(
-    "http://javascriptreact-react-frameworks.local/graphql",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `
+  const res = await fetch("http://reactframeworks/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
             query allPostsQuery {
                 posts {
                     nodes {
@@ -76,9 +71,8 @@ export async function getStaticPaths() {
                 }
             }
         `,
-      }),
-    }
-  );
+    }),
+  });
 
   const json = await res.json();
   const posts = json.data.posts.nodes;
